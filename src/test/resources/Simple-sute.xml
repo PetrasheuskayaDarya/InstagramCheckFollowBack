@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+
+
+<suite name="SimpleSuite">
+
+
+	<test name="SimpleTest">
+		<groups>
+			<run>
+				<include name="FollowAutomation"></include>
+			</run>
+		</groups>
+
+		<classes>
+			<class name="by.htp.insta.tests.FollowAutomation"></class>
+			<class name="by.htp.insta.steps.Steps"></class>
+		</classes>
+	</test>
+</suite>
