@@ -19,7 +19,7 @@ public class AccountDaoImple implements AccountDao {
 	private static final String CHECK_FOLLOW_BACK_ACCOUNTS = "SELECT * FROM account WHERE followDate = DATE_ADD(CURDATE(), INTERVAL -3 DAY)";
 	private static final String CHANGES_IF_FOLLOW_BACK = "UPDATE account SET checked = ?, friend = ? WHERE nikName = ?";
 	private static final String CHANGES_IF_NOT_FOLLOW_BACK = "UPDATE account SET checked = ?, friend = ? WHERE nikName = ?";
-	private static final String SELECT_ONLY_CHECKED_TABLE = "SELECT checked,nikName FROM account WHERE checked = 'false' AND followDate = DATE_ADD(CURDATE(), INTERVAL -12 DAY)";
+	private static final String SELECT_ONLY_CHECKED_TABLE = "SELECT checked,nikName FROM account WHERE checked = 'false' AND followDate = DATE_ADD(CURDATE(), INTERVAL -20 DAY)";
 
 	@Override
 	public Account readById(int id) {

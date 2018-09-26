@@ -8,16 +8,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import by.htp.insta.dao.AccountDao;
 import by.htp.insta.dao.imple.AccountDaoImple;
 import by.htp.insta.entity.Account;
-import by.htp.insta.steps.Steps;
 
 public class MainPage extends AbstractPage {
 	private final String BASE_URL = "https://mail.ru/login";
+	List<String> accountsThatNeedUnfollow = new ArrayList<>();
 
 	public MainPage(WebDriver driver) {
 		super(driver);
@@ -41,7 +42,7 @@ public class MainPage extends AbstractPage {
 	@FindBy(className = "coreSpriteDesktopNavProfile")
 	private WebElement profileUser;
 
-	@FindBy(className = "//*[@id='react-root']/section/nav/div[2]/div/div/div[3]/div/div[3]/a")
+	@FindBy(xpath = "//*[@id='react-root']/section/nav/div[2]/div/div/div[3]/div/div[3]/a")
 	private WebElement profile;
 
 	@FindBy(className = "dCJp8")
@@ -77,6 +78,9 @@ public class MainPage extends AbstractPage {
 	@FindBy(xpath = "//button[@class='ckWGn']")
 	private WebElement closePostButton;
 
+	@FindBy(xpath = "html/body/div[3]/div/div/div[1]/div[2]/button")
+	private WebElement closeListWhoFollowUsButton;
+
 	@FindBy(xpath = "//*[@id='react-root']/section/main/div/header/section/ul/li[2]/a")
 	private WebElement linkFollowers;
 
@@ -97,6 +101,9 @@ public class MainPage extends AbstractPage {
 
 	@FindBy(xpath = "html/body/div[3]/div/div/div/div[3]/button[1]")
 	private WebElement unfollowButton;
+
+	@FindBy(xpath = "html/body/div[3]/div/div/div[2]/ul/div/li[1]/div/div[1]/div/div[1]/a")
+	private WebElement firstAccountInList;
 
 	public void clickOnParameters() {
 		parameters.click();
@@ -162,6 +169,7 @@ public class MainPage extends AbstractPage {
 		waitForPageLoads();
 		profileIcon.click();
 		linkFollowers.click();
+		scrollAllWhoFollowUsList();
 		String element;
 		for (int i = 0; i < listAccountNameWhoFollow.size(); i++) {
 			element = listAccountNameWhoFollow.get(i).getAttribute("title");
@@ -169,61 +177,91 @@ public class MainPage extends AbstractPage {
 		}
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
 	public void checkAndChangeAccountsWhoFollow8DaysAgo() throws InterruptedException {
 		AccountDao accountDao = new AccountDaoImple();
 
 		List<Account> listCheckedTable = accountDao.selectCheckedTable();
 		for (int i = 0; i < listCheckedTable.size(); i++) {
-			System.out.println(listCheckedTable.get(i));
-			// listCheckedTable.get(0); //список с nikNames and false
+			System.out.println(listCheckedTable.get(i));// the list of all accounts from db with false and 2 weeks ago
+
 		}
 		Account account2 = new Account();
 		String account3;
 		for (int cntrx = 0; cntrx < listCheckedTable.size(); cntrx++) {
 			account2 = listCheckedTable.get(cntrx);
 			account3 = account2.getNikName();
-			System.out.println(account2.getNikName());// берём поочерёдно каждый nikName из listCheckedTable
+			System.out.println(account2.getNikName());// Take one by nikName from listCheckedTable
 
-			
 			if (getAllAccountsNameWhoFollowUsWithoutSteps().contains(account3)) {
-				System.out.println("Подписался назад");
+				System.out.println("------FollowBack------");
 				accountDao.updateIfFollowBack(account2);
 			} else {
-				System.out.println("Не подписался назад");
+				System.out.println("------NotFollowBack------");
 				accountDao.updateIfNotFollowBack(account2);
+				accountsThatNeedUnfollow.add(account2.getNikName());
+			}
 
-				//Actions newTab = new Actions(driver);
-				//driver.switchTo().window(newTab);
-				// driver.get("https://www.instagram.com/daryaaa756/");
+		}
+		for (int b = 0; b < accountsThatNeedUnfollow.size(); b++) {
+			System.out.println(accountsThatNeedUnfollow.get(b));// List of people who not follow back
+		}
 
-//				   driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
-//				   driver.navigate().to("https://www.instagram.com/daryaaa756");
+		System.out.println("---------------Work on people who not follow back----------------");
+		
+		closeListWhoFollowUsButton.click();
+		profile.click();
+		linkWeFollow.click();
+		scrollAllWeFollowList();
+		getAllAccountsNameWhoWeFollowWithoutSteps();
+		
+		System.out.println("-----------List of accounts that we need to unfollow--------");
 
-				// Steps steps = new Steps();
-				// steps.initBrowser();
-				// steps.LogIn();
-				// Thread.sleep(3000);
-				// profile.click();
-//				   linkWeFollow.click();
-				
-				
-//				if (getAllAccountsNameWhoWeFollowWithoutSteps().contains(account3)) {
-//					WebElement accountThatWeWantUnfollow = driver.findElement(By.linkText(account3));
-//					accountThatWeWantUnfollow.click();
-//					followingButton.click();
-//					unfollowButton.click();
-//					driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
-//					
-//				}
+		for (int b = 0; b < accountsThatNeedUnfollow.size(); b++) {
+			System.out.println(accountsThatNeedUnfollow.get(b));
+		}
 
+		for (int i = 0; i < accountsThatNeedUnfollow.size(); i++) {
+			String n = accountsThatNeedUnfollow.get(i);
+			if (getAllAccountsNameWhoWeFollowWithoutSteps().contains(n)) {
+				WebElement accountThatWeWantUnfollow = driver.findElement(By.linkText(n));
+				accountThatWeWantUnfollow.click();
+				unfollowAccount();
 			}
 		}
+	}
+	
+	public void unfollowAccount() throws InterruptedException {
+		followingButton.click();
+		unfollowButton.click();
+		Thread.sleep(500);
+		profile.click();
+		linkWeFollow.click();
+	}
+
+	public void scrollAllWeFollowList() throws InterruptedException {
+		int count = 1;
+		EventFiringWebDriver eventFiringWebDriver = new EventFiringWebDriver(driver);
+		do {
+			Thread.sleep(300);
+			eventFiringWebDriver.executeScript("document.querySelector('.j6cq2').scrollTop=10000");
+			count++;
+		} while (count < 50);
+	}
+
+	public void scrollAllWhoFollowUsList() throws InterruptedException {
+		int count = 1;
+		EventFiringWebDriver eventFiringWebDriver = new EventFiringWebDriver(driver);
+		do {
+			Thread.sleep(300);
+			eventFiringWebDriver.executeScript("document.querySelector('.j6cq2').scrollTop=10000");
+			count++;
+		} while (count < 50);
 	}
 
 	public List<String> getAllAccountsNameWhoFollowUsWithoutSteps() {
 		List<String> element2 = new ArrayList<String>();
 		String element;
+
 		for (int i = 0; i < listAccountNameWhoFollow.size(); i++) {
 			element = listAccountNameWhoFollow.get(i).getAttribute("title");
 			element2.add(element);
@@ -232,21 +270,19 @@ public class MainPage extends AbstractPage {
 	}
 
 	public List<String> getAllAccountsNameWhoWeFollowWithoutSteps() {
+
 		List<String> element2 = new ArrayList<String>();
 		String element;
 		for (int i = 0; i < listAccountNameWhoWeFollow.size(); i++) {
 			element = listAccountNameWhoWeFollow.get(i).getAttribute("title");
 			element2.add(element);
+
 		}
+		// for (int c = 0; c < element2.size(); c++) {
+		// System.out.println(element2.get(c));
+		// }
 		return (List<String>) element2;
-	}
-
-	public void unFollowUser() throws InterruptedException {
-		Steps steps = new Steps();
-		steps.initBrowser();
-		steps.LogIn();
-		Thread.sleep(3000);
-		linkWeFollow.click();
 
 	}
+
 }

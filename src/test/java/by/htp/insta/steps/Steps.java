@@ -27,7 +27,7 @@ public class Steps {
 		loginPage.openPage();
 		loginPage.login(conf.getLogin(), conf.getPass());
 		mainPage.clickNotNowLink();
-		//mainPage.clickNotNowNotifications();
+		mainPage.clickNotNowNotifications();
 	}
 
 	public void getAllAccountsNameWhoFollowUs() throws InterruptedException {
@@ -38,6 +38,11 @@ public class Steps {
 	public void changeAccountsThatWasChecked() throws InterruptedException {
 		MainPage mainPage = new MainPage(driver);
 		mainPage.checkAndChangeAccountsWhoFollow8DaysAgo();
+	}
+	
+	public void unfollowAccount() {
+		MainPage mainPage = new MainPage(driver);
+		//mainPage.unFollowUser();
 	}
 
 }

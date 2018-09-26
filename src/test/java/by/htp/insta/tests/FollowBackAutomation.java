@@ -22,6 +22,7 @@ public class FollowBackAutomation {
 		
         steps.getAllAccountsNameWhoFollowUs();// 1 
 		steps.changeAccountsThatWasChecked();// 2 for checking follow back or not
+		//steps.unfollowAccount();
 
 	}
 
