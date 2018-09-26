@@ -26,7 +26,7 @@ public class Steps {
 		MainPage mainPage = new MainPage(driver);
 		loginPage.openPage();
 		loginPage.login(conf.getLogin(), conf.getPass());
-		mainPage.clickNotNowLink();
+		// mainPage.clickNotNowLink();
 		mainPage.clickNotNowNotifications();
 	}
 
@@ -39,11 +39,5 @@ public class Steps {
 		MainPage mainPage = new MainPage(driver);
 		mainPage.checkAndChangeAccountsWhoFollow8DaysAgo();
 	}
-	
-	public void unfollowAccount() {
-		MainPage mainPage = new MainPage(driver);
-		//mainPage.unFollowUser();
-	}
 
 }
-

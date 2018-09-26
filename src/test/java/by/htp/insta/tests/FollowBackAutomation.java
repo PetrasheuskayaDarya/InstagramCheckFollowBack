@@ -19,10 +19,9 @@ public class FollowBackAutomation {
 
 	@Test(groups = { "FollowAutomation" })
 	public void FollowAutomation() throws InterruptedException {
-		
-        steps.getAllAccountsNameWhoFollowUs();// 1 
+
+		steps.getAllAccountsNameWhoFollowUs();// 1
 		steps.changeAccountsThatWasChecked();// 2 for checking follow back or not
-		//steps.unfollowAccount();
 
 	}
 

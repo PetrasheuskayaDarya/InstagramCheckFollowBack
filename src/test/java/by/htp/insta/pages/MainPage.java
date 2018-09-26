@@ -207,13 +207,13 @@ public class MainPage extends AbstractPage {
 		}
 
 		System.out.println("---------------Work on people who not follow back----------------");
-		
+
 		closeListWhoFollowUsButton.click();
 		profile.click();
 		linkWeFollow.click();
 		scrollAllWeFollowList();
 		getAllAccountsNameWhoWeFollowWithoutSteps();
-		
+
 		System.out.println("-----------List of accounts that we need to unfollow--------");
 
 		for (int b = 0; b < accountsThatNeedUnfollow.size(); b++) {
@@ -229,7 +229,7 @@ public class MainPage extends AbstractPage {
 			}
 		}
 	}
-	
+
 	public void unfollowAccount() throws InterruptedException {
 		followingButton.click();
 		unfollowButton.click();
@@ -245,7 +245,7 @@ public class MainPage extends AbstractPage {
 			Thread.sleep(300);
 			eventFiringWebDriver.executeScript("document.querySelector('.j6cq2').scrollTop=10000");
 			count++;
-		} while (count < 50);
+		} while (count < 100);
 	}
 
 	public void scrollAllWhoFollowUsList() throws InterruptedException {
@@ -255,7 +255,7 @@ public class MainPage extends AbstractPage {
 			Thread.sleep(300);
 			eventFiringWebDriver.executeScript("document.querySelector('.j6cq2').scrollTop=10000");
 			count++;
-		} while (count < 50);
+		} while (count < 100);
 	}
 
 	public List<String> getAllAccountsNameWhoFollowUsWithoutSteps() {
