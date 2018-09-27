@@ -9,7 +9,7 @@ import by.htp.insta.steps.Steps;
 public class FollowBackAutomation {
 	private Steps steps;
 
-	@BeforeMethod(description = "Init browser", groups = { "likeAutomation" })
+	@BeforeMethod(description = "Init browser", groups = { "CheckFollowBack" })
 	public void setUp() throws InterruptedException {
 		steps = new Steps();
 		steps.initBrowser();

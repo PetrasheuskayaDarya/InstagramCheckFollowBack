@@ -242,8 +242,8 @@ public class MainPage extends AbstractPage {
 		int count = 1;
 		EventFiringWebDriver eventFiringWebDriver = new EventFiringWebDriver(driver);
 		do {
-			Thread.sleep(300);
-			eventFiringWebDriver.executeScript("document.querySelector('.j6cq2').scrollTop=10000");
+			Thread.sleep(700);
+			eventFiringWebDriver.executeScript("document.querySelector('.j6cq2').scrollTop=20000");
 			count++;
 		} while (count < 100);
 	}
@@ -252,8 +252,8 @@ public class MainPage extends AbstractPage {
 		int count = 1;
 		EventFiringWebDriver eventFiringWebDriver = new EventFiringWebDriver(driver);
 		do {
-			Thread.sleep(300);
-			eventFiringWebDriver.executeScript("document.querySelector('.j6cq2').scrollTop=10000");
+			Thread.sleep(700);
+			eventFiringWebDriver.executeScript("document.querySelector('.j6cq2').scrollTop=20000");
 			count++;
 		} while (count < 100);
 	}
