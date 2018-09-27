@@ -17,7 +17,7 @@ public class FollowBackAutomation {
 		Thread.sleep(3000);
 	}
 
-	@Test(groups = { "FollowAutomation" })
+	@Test(groups = { "CheckFollowBack" })
 	public void FollowAutomation() throws InterruptedException {
 
 		steps.getAllAccountsNameWhoFollowUs();// 1
