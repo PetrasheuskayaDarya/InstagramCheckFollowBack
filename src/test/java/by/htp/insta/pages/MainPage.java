@@ -243,7 +243,7 @@ public class MainPage extends AbstractPage {
 		EventFiringWebDriver eventFiringWebDriver = new EventFiringWebDriver(driver);
 		do {
 			Thread.sleep(700);
-			eventFiringWebDriver.executeScript("document.querySelector('.j6cq2').scrollTop=20000");
+			eventFiringWebDriver.executeScript("document.querySelector('.isgrP').scrollTop=20000");
 			count++;
 		} while (count < 100);
 	}
@@ -253,7 +253,7 @@ public class MainPage extends AbstractPage {
 		EventFiringWebDriver eventFiringWebDriver = new EventFiringWebDriver(driver);
 		do {
 			Thread.sleep(700);
-			eventFiringWebDriver.executeScript("document.querySelector('.j6cq2').scrollTop=20000");
+			eventFiringWebDriver.executeScript("document.querySelector('.isgrP').scrollTop=20000");
 			count++;
 		} while (count < 100);
 	}
