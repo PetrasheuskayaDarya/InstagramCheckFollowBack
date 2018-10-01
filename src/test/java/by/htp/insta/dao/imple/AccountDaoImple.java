@@ -1,5 +1,10 @@
 package by.htp.insta.dao.imple;
 
+
+import static by.htp.insta.dao.util.MySqlPropertyManager.getLogin;
+import static by.htp.insta.dao.util.MySqlPropertyManager.getPass;
+import static by.htp.insta.dao.util.MySqlPropertyManager.getUrl;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -122,24 +127,24 @@ public class AccountDaoImple implements AccountDao {
 		}
 	}
 
-	private static final ResourceBundle rb;
-
-	static {
-		rb = ResourceBundle.getBundle("db_config");
-	}
-
-	public static String getUrl() {
-		return rb.getString("db.url");
-	}
-
-	public static String getLogin() {
-		return rb.getString("db.login");
-	}
-
-	public static String getPass() {
-		return rb.getString("db.pass");
-	}
-
+//	private static final ResourceBundle rb;
+//
+//	static {
+//		rb = ResourceBundle.getBundle("db_config");
+//	}
+//
+//	public static String getUrl() {
+//		return rb.getString("db.url");
+//	}
+//
+//	public static String getLogin() {
+//		return rb.getString("db.login");
+//	}
+//
+//	public static String getPass() {
+//		return rb.getString("db.pass");
+//	}
+//
 	private Account buildAccount(ResultSet rs) throws SQLException {
 		Account account = new Account();
 		account.setNikName(rs.getString("nikName"));
