@@ -26,6 +26,9 @@ public class AccountDaoImple implements AccountDao {
 	private static final String CHANGES_IF_NOT_FOLLOW_BACK = "UPDATE account SET checked = ?, friend = ? WHERE nikName = ?";
 	private static final String SELECT_ONLY_CHECKED_TABLE = "SELECT checked,nikName FROM account WHERE checked = 'false' AND followDate = DATE_ADD(CURDATE(), INTERVAL -7 DAY)";
 
+	
+	
+	
 	@Override
 	public Account readById(int id) {
 		Account account = null;
